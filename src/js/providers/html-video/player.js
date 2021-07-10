@@ -62,6 +62,8 @@ export default class Player extends BasePlayer {
 		each(htmlVideo, (value, key) => {
 			if (PLAYER_PROPS.indexOf(key) > -1) {
 				// player[key] = value;
+				console.log('the key is = ', key);
+				console.log('the value is = ', value);
 				// modified attribute
 				player.setAttribute(key, value);
 			}
