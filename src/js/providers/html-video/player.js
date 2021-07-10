@@ -45,32 +45,34 @@ export default class Player extends BasePlayer {
 	 *
 	 * @return {object|null} - A created player object.
 	 */
-	createPlayer( readyCallback = null ) {
+	createPlayer(readyCallback = null) {
 		const options = this.Splide.options.video;
 		const { htmlVideo = {} } = options.playerOptions;
 
-		const player = document.createElement( 'video' );
+		const player = document.createElement('video');
 		player.src = this.videoId;
 
-		this.elements.iframe.appendChild( player );
+		this.elements.iframe.appendChild(player);
 
-		player.controls = ! options.hideControls;
-		player.loop     = options.loop;
-		player.volume = Math.max( Math.min( options.volume, 1 ), 0 );
-		player.muted  = options.mute;
+		player.controls = !options.hideControls;
+		player.loop = options.loop;
+		player.volume = Math.max(Math.min(options.volume, 1), 0);
+		player.muted = options.mute;
 
-		each( htmlVideo, ( value, key ) => {
-			if ( PLAYER_PROPS.indexOf( key ) > -1 ) {
-				player[ key ] = value;
+		each(htmlVideo, (value, key) => {
+			if (PLAYER_PROPS.indexOf(key) > -1) {
+				// player[key] = value;
+				// modified attribute
+				player.setAttribute(key, value);
 			}
-		} );
+		});
 
-		player.addEventListener( 'play', this.onPlay.bind( this ) );
-		player.addEventListener( 'pause', this.onPause.bind( this ) );
-		player.addEventListener( 'ended', this.onEnded.bind( this ) );
+		player.addEventListener('play', this.onPlay.bind(this));
+		player.addEventListener('pause', this.onPause.bind(this));
+		player.addEventListener('ended', this.onEnded.bind(this));
 
-		if ( readyCallback ) {
-			player.addEventListener( 'loadeddata', readyCallback );
+		if (readyCallback) {
+			player.addEventListener('loadeddata', readyCallback);
 		}
 
 		return player;
@@ -82,20 +84,20 @@ export default class Player extends BasePlayer {
 	 *
 	 * @return {string} - Video ID(path or URL).
 	 */
-	findVideoId(){
-		return this.slide.getAttribute( 'data-splide-html-video' );
+	findVideoId() {
+		return this.slide.getAttribute('data-splide-html-video');
 	}
 
 	/**
 	 * Destroy.
 	 */
 	destroy() {
-		if ( this.player ) {
+		if (this.player) {
 			this.player.pause();
-			this.player.removeAttribute( 'src' );
+			this.player.removeAttribute('src');
 			this.player.load();
 
-			this.elements.iframe.removeChild( this.player );
+			this.elements.iframe.removeChild(this.player);
 			this.player = null;
 		}
 
