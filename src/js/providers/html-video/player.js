@@ -58,14 +58,11 @@ export default class Player extends BasePlayer {
 		player.loop = options.loop;
 		player.volume = Math.max(Math.min(options.volume, 1), 0);
 		player.muted = options.mute;
+		player.setAttribute('playsinline', '');
 
 		each(htmlVideo, (value, key) => {
 			if (PLAYER_PROPS.indexOf(key) > -1) {
-				// player[key] = value;
-				console.log('the key is = ', key);
-				console.log('the value is = ', value);
-				// modified attribute
-				player.setAttribute(key, value);
+				player[key] = value;
 			}
 		});
 
