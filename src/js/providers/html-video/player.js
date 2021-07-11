@@ -51,7 +51,6 @@ export default class Player extends BasePlayer {
 
 		const player = document.createElement('video');
 		player.src = this.videoId;
-		player.setAttribute('playsinline', '');
 
 		this.elements.iframe.appendChild(player);
 
@@ -63,7 +62,7 @@ export default class Player extends BasePlayer {
 
 		each(htmlVideo, (value, key) => {
 			if (PLAYER_PROPS.indexOf(key) > -1) {
-				player[key] = value;
+				player.setAttribute(key, value)
 			}
 		});
 
